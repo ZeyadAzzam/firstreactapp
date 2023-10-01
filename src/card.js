@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Modal from 'react-bootstrap/Modal';
 import { useState } from "react";
+import { ModalHeader } from "react-bootstrap";
 
 
 
@@ -14,34 +15,35 @@ function CardComp(props) {
   return (
     <>
       {/* card */}
-      
+
       <Card style={{ width: "18rem" }}>
         <Card.Img variant="top" src={props.image} />
         <Card.Body>
           <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
             {props.title}
           </Card.Title>
-          <Card.Text></Card.Text>
+          <Card.Text style={{ fontWeight: "bold", textAlign:"center",fontSize:"20px"}}>
+            Category: {props.Category}
+          </Card.Text>
           <Button variant="primary" onClick={handleShow}>
             Show Recipe
           </Button>
         </Card.Body>
       </Card>
 
-
       {/* model show */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
+
         <Modal.Body>{props.description}</Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary">
-            Save Changes
-          </Button>
+          <Button variant="primary">Save Changes</Button>
         </Modal.Footer>
       </Modal>
     </>

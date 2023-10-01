@@ -1,25 +1,35 @@
 import CardComp from "./card";
-import data from "./data.json";
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useEffect, useState } from "react";
+
 
 function Main() {
-  let [items, setItems] = useState(data);
+  let [items, setItems] = useState([]);
 
-  function handleSubmit(event) {
-    event.preventDefault();
 
-    let searchedValue = event.target.search.value;
+   async function getData() {
+     const url = "https://www.themealdb.com/api/json/v1/1/search.php?f=a";
+     
 
-    let filteredValue = data.filter(function (item) {
-      return item.title.toLowerCase().includes(searchedValue.toLowerCase());
-    });
-    setItems(filteredValue);
-  }
+     try {
+       const response = await fetch(url);
+       const result = await response.json();
+       setItems(result.meals);
+     } catch (error) {
+       console.error(error);
+     }
+   }
+
+   useEffect(function () {
+     getData();
+   }, []);
+
+
+  
   return (
     <>
-      <Form className="d-flex" onSubmit={handleSubmit}>
+      <Form className="d-flex" >
         <Form.Control
           type="search"
           placeholder="Search here.."
@@ -43,9 +53,10 @@ function Main() {
         {items.map(function (item) {
           return (
             <CardComp
-              image={item.image_url}
-              title={item.title}
-              description={item.description}
+              image={item.strMealThumb}
+              title={item.strMeal}
+              description={item.strInstructions}
+              Category={item.strCategory}
             />
           );
         })}
@@ -55,3 +66,16 @@ function Main() {
 }
 
 export default Main;
+
+
+
+// function handleSubmit(event) {
+//     event.preventDefault();
+
+//     let searchedValue = event.target.search.value;
+
+//     let filteredValue = data.filter(function (item) {
+//       return item.title.toLowerCase().includes(searchedValue.toLowerCase());
+//     });
+//     setItems(filteredValue);
+//   }
