@@ -3,33 +3,28 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 
-
 function Main() {
   let [items, setItems] = useState([]);
 
+  async function getData() {
+    const url = "https://www.themealdb.com/api/json/v1/1/search.php?f=b";
 
-   async function getData() {
-     const url = "https://www.themealdb.com/api/json/v1/1/search.php?f=a";
-     
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+      setItems(result.meals);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-     try {
-       const response = await fetch(url);
-       const result = await response.json();
-       setItems(result.meals);
-     } catch (error) {
-       console.error(error);
-     }
-   }
+  useEffect(function () {
+    getData();
+  }, []);
 
-   useEffect(function () {
-     getData();
-   }, []);
-
-
-  
   return (
     <>
-      <Form className="d-flex" >
+      <Form className="d-flex">
         <Form.Control
           type="search"
           placeholder="Search here.."
@@ -68,7 +63,7 @@ function Main() {
 export default Main;
 
 
-
+// handle submit event
 // function handleSubmit(event) {
 //     event.preventDefault();
 

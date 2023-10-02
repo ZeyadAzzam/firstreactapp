@@ -1,13 +1,10 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 import { ModalHeader } from "react-bootstrap";
 
-
-
 function CardComp(props) {
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -22,7 +19,13 @@ function CardComp(props) {
           <Card.Title style={{ textAlign: "center", fontWeight: "bold" }}>
             {props.title}
           </Card.Title>
-          <Card.Text style={{ fontWeight: "bold", textAlign:"center",fontSize:"20px"}}>
+          <Card.Text
+            style={{
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: "20px",
+            }}
+          >
             Category: {props.Category}
           </Card.Text>
           <Button variant="primary" onClick={handleShow}>
