@@ -1,24 +1,36 @@
-import Form from 'react-bootstrap/Form';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import CardComp from "./card";
 
 function Products() {
-  let [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
 
+  async function getData() {
+    const url = "https://www.themealdb.com/api/json/v1/1/search.php?f=b";
+
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+      setItems(result.meals);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
+    <div style={{display:"flex",flexWrap:"wrap",gap:"1rem", marginLeft:"2rem"}}>
+      {items.map((item) => (
+        <CardComp
+          image={item.strMealThumb}
+          title={item.strMeal}
+          description={item.strInstructions}
+        />
+      ))}
+    </div>
+  );
+}
 
-    <>
-    <Form.Select aria-label="Default select example">
-      <option>Open this select menu</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </Form.Select>
-  
-
-
-    </>
-  )
-   
-  }
 export default Products;

@@ -81,7 +81,6 @@ function Main() {
           items.map(function (item) {
             return (
               <CardComp
-                key={item.idMeal}
                 image={item.strMealThumb}
                 title={item.strMeal}
                 description={item.strInstructions}
