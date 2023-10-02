@@ -1,13 +1,15 @@
 import CardComp from "./card";
+import "./main.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
+
 
 function Main() {
   let [items, setItems] = useState([]);
 
   async function getData() {
-    const url = "https://www.themealdb.com/api/json/v1/1/search.php?f=b";
+    const url = "https://www.themealdb.com/api/json/v1/1/search.php?f=t";
 
     try {
       const response = await fetch(url);
@@ -24,13 +26,14 @@ function Main() {
 
   return (
     <>
-      <Form className="d-flex">
+      <Form className="d-flex form-flex">
         <Form.Control
           type="search"
           placeholder="Search here.."
           className="me-2"
           aria-label="Search"
           name="search"
+          required
         />
         <Button variant="outline-success" type="submit">
           Search
@@ -51,7 +54,6 @@ function Main() {
               image={item.strMealThumb}
               title={item.strMeal}
               description={item.strInstructions}
-              Category={item.strCategory}
             />
           );
         })}
@@ -61,7 +63,6 @@ function Main() {
 }
 
 export default Main;
-
 
 // handle submit event
 // function handleSubmit(event) {
