@@ -1,9 +1,7 @@
 import CardComp from "./card";
-import "./main.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
-
 
 function Main() {
   let [items, setItems] = useState([]);
@@ -24,9 +22,39 @@ function Main() {
     getData();
   }, []);
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+    let searchedValue = event.target.search.value;
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchedValue}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+       if (data.meals) {
+         let filteredValue = data.meals.filter(function (item) {
+           return item.strMeal
+             .toLowerCase()
+             .includes(searchedValue.toLowerCase());
+         });
+
+         setItems(filteredValue);
+       } else {
+        setItems([]);
+       }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
-      <Form className="d-flex form-flex">
+      <Form
+        className="d-flex form-flex"
+        onSubmit={handleSubmit}
+        style={{ width: "90%", margin: "1rem 0 1rem 1rem" }}
+      >
         <Form.Control
           type="search"
           placeholder="Search here.."
@@ -41,6 +69,7 @@ function Main() {
       </Form>
 
       <div
+        className="container"
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -48,30 +77,23 @@ function Main() {
           margin: "1rem 0 0 1rem",
         }}
       >
-        {items.map(function (item) {
-          return (
-            <CardComp
-              image={item.strMealThumb}
-              title={item.strMeal}
-              description={item.strInstructions}
-            />
-          );
-        })}
+        {items.length !== 0 ? (
+          items.map(function (item) {
+            return (
+              <CardComp
+                key={item.idMeal}
+                image={item.strMealThumb}
+                title={item.strMeal}
+                description={item.strInstructions}
+              />
+            );
+          })
+        ) : (
+          <h3 style={{marginTop:"2rem",color:"red"}}>Meal not found</h3>
+        )}
       </div>
     </>
   );
 }
 
 export default Main;
-
-// handle submit event
-// function handleSubmit(event) {
-//     event.preventDefault();
-
-//     let searchedValue = event.target.search.value;
-
-//     let filteredValue = data.filter(function (item) {
-//       return item.title.toLowerCase().includes(searchedValue.toLowerCase());
-//     });
-//     setItems(filteredValue);
-//   }
