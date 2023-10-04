@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 function Browse() {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");  //this the default state or when the page load
+  const [selectedCategory, setSelectedCategory] = useState("All"); //this the default state or when the page load
 
   async function getData(category) {
     // default state
@@ -69,11 +69,19 @@ function Browse() {
         </Form.Group>
       </Form>
       <div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem", margin: "0 0 0 1rem" }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "2rem",
+            margin: "0 0 0 1rem",
+          }}
+        >
           {items.map((item) => (
             <CardComp
               image={item.strMealThumb}
               title={item.strMeal}
+              FavoriteView={true}
             />
           ))}
         </div>

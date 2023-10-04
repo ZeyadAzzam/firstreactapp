@@ -2,8 +2,13 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import LoginButton from "./login";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "./logout";
 
-function NavScrollExample() {
+function Header() {
+  let { isAuthenticated } = useAuth0();
+
   return (
     <Navbar
       expand="lg"
@@ -27,6 +32,8 @@ function NavScrollExample() {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/products">products</Nav.Link>
             <Nav.Link href="/browse">Browse</Nav.Link>
+            <Nav.Link href="/favorites">Favorites</Nav.Link>
+
             <NavDropdown title="drop down" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -42,9 +49,11 @@ function NavScrollExample() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        {/* check if it Authenticated True:logout,False:"login button"  */}
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </Container>
     </Navbar>
   );
 }
 
-export default NavScrollExample;
+export default Header;

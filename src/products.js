@@ -21,12 +21,20 @@ function Products() {
   }, []);
 
   return (
-    <div style={{display:"flex",flexWrap:"wrap",gap:"1rem", marginLeft:"2rem"}}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "1rem",
+        marginLeft: "2rem",
+      }}
+    >
       {items.map((item) => (
         <CardComp
           image={item.strMealThumb}
           title={item.strMeal}
           description={item.strInstructions}
+          FavoriteView={true}
         />
       ))}
     </div>

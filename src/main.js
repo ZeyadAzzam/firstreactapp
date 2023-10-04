@@ -31,18 +31,17 @@ function Main() {
       const response = await fetch(url);
       const data = await response.json();
 
-       if (data.meals) {
-         let filteredValue = data.meals.filter(function (item) {
-           return item.strMeal
-             .toLowerCase()
-             .includes(searchedValue.toLowerCase());
-         });
+      if (data.meals) {
+        let filteredValue = data.meals.filter(function (item) {
+          return item.strMeal
+            .toLowerCase()
+            .includes(searchedValue.toLowerCase());
+        });
 
-         setItems(filteredValue);
-       } else {
+        setItems(filteredValue);
+      } else {
         setItems([]);
-       }
-
+      }
     } catch (error) {
       console.error(error);
     }
@@ -84,11 +83,12 @@ function Main() {
                 image={item.strMealThumb}
                 title={item.strMeal}
                 description={item.strInstructions}
+                FavoriteView={true}
               />
             );
           })
         ) : (
-          <h3 style={{marginTop:"2rem",color:"red"}}>Meal not found</h3>
+          <h3 style={{ marginTop: "2rem", color: "red" }}>Meal not found</h3>
         )}
       </div>
     </>
