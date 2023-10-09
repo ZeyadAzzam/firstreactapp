@@ -4,11 +4,10 @@ import Main from "./main";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Products from "./products";
 import Browse from "./browse";
-import Favorites from "./favorites"
-
+import Favorites from "./favorites";
+import Footer  from "./footer";
 
 function App() {
-
   return (
     <>
       <Header />
@@ -20,6 +19,7 @@ function App() {
           <Route path="/favorites" Component={Favorites}></Route>
         </Routes>
       </Router>
+      <Footer/>
     </>
   );
 }

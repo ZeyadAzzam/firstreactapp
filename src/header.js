@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./logout";
 
 function Header() {
-  let { isAuthenticated } = useAuth0();
+  let { isAuthenticated, user } = useAuth0();
 
   return (
     <Navbar
@@ -49,8 +49,28 @@ function Header() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        {/* check if it Authenticated True:logout,False:"login button"  */}
-        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+
+        {isAuthenticated ? (
+          <>
+            <h3
+              style={{ color: "black", margin: "0 1rem 0 0", fontSize: "20px" }}
+            >
+              {user.name}
+            </h3>
+            <img
+              src={user.picture}
+              alt={user.name}
+              style={{
+                borderRadius: "50%",
+                height: "50px",
+                margin: " 0 1rem 0 0",
+              }}
+            ></img>
+            <LogoutButton />
+          </>
+        ) : (
+          <LoginButton />
+        )}
       </Container>
     </Navbar>
   );
